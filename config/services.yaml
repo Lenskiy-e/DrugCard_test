@@ -1,0 +1,14 @@
+parameters:
+    csv_storage_path: '%kernel.project_dir%/var/files/'
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+
+    App\Infrastructure\Content\Writer\CSVWriter:
+        arguments:
+            $storageFolder: '%csv_storage_path%'

@@ -1,0 +1,16 @@
+version: '3'
+
+tasks:
+  start:
+    desc: "Build the project"
+    cmds:
+      - docker compose up -d
+      - docker compose exec app composer install
+      - docker compose exec app php bin/console doctrine:migrations:migrate --no-interaction
+      - docker compose exec app php bin/console cache:warmup
+
+  shell:
+    desc: "Enter app shell"
+    cmds:
+      - task: start
+      - docker compose exec app bash
